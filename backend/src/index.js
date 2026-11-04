@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import { requireAuth, requireRole } from './middleware/auth.js';
 import jobRoutes from './routes/jobs.js';
+import vendorRoutes from './routes/vendor.js';
+import adminRoutes from './routes/admin.js';
 
 const app = express();
 app.use(express.json());
@@ -21,6 +23,8 @@ app.get('/api/admin-only-ping', requireAuth, requireRole('ADMIN'), (_req, res) =
 });
 
 app.use('/api/jobs', jobRoutes);
+app.use('/api/vendor', vendorRoutes);
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

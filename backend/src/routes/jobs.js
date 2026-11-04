@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { createClient } from '@supabase/supabase-js';
-import { getSupabaseAdmin } from '../lib/supabase.js';
+import { clientAsUser, getSupabaseAdmin } from '../lib/supabase.js';
 import { requireAuth } from '../middleware/auth.js';
 import { generateDocument } from '../services/generator.js';
 
@@ -8,16 +7,6 @@ const router = Router();
 
 const BUCKET = 'documents';
 const FORMATS = ['PDF', 'DOCX', 'PNG', 'JPEG'];
-
-// A Supabase client that acts as the CALLING USER (their JWT in the
-// Authorization header), so inserts go through RLS policies and triggers
-// (pricing trigger computes total_charged / vendor_cut server-side).
-function clientAsUser(token) {
-  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
-    global: { headers: { Authorization: `Bearer ${token}` } },
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-}
 
 function canSeeJob(user, job) {
   return user.role === 'ADMIN' || job.customer_id === user.id || job.vendor_id === user.id;

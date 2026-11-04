@@ -24,3 +24,12 @@ export function getSupabaseAdmin() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
+
+// A Supabase client that acts as the CALLING USER (their JWT in the
+// Authorization header), so queries go through RLS policies and triggers.
+export function clientAsUser(token) {
+  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}

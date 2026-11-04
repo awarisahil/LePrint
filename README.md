@@ -1,4 +1,4 @@
-# PDF Generator Platform
+# LePrint
 
 A three-role document generation platform. Customers generate documents (PDF / DOCX /
 PNG / JPEG); vendors generate documents **on behalf of** customers and earn a commission;

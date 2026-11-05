@@ -1,11 +1,14 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import { requireAuth, requireRole } from './middleware/auth.js';
 import jobRoutes from './routes/jobs.js';
 import vendorRoutes from './routes/vendor.js';
 import adminRoutes from './routes/admin.js';
 
 const app = express();
+// Dev: allow the Vite dev server to call the API. Tighten to your real origin in production.
+app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {

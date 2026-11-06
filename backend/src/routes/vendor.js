@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { clientAsUser } from '../lib/supabase.js';
+import { clientAsUser, getSupabaseAdmin } from '../lib/supabase.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
 
 const router = Router();
@@ -58,6 +58,19 @@ router.get('/payouts', async (req, res) => {
 
   if (error) return res.status(400).json({ error: error.message });
   res.json({ payouts: data });
+});
+
+// Customers a vendor can generate documents for (id + email only).
+// NOTE: fine at small scale; add search/pagination when the user base grows.
+router.get('/customers', async (req, res) => {
+  const { data, error } = await getSupabaseAdmin()
+    .from('profiles')
+    .select('id, email, full_name')
+    .eq('role', 'CUSTOMER')
+    .order('email');
+
+  if (error) return res.status(400).json({ error: error.message });
+  res.json({ customers: data });
 });
 
 export default router;

@@ -182,13 +182,13 @@ SELECT entry_type, amount, balance_after FROM vendor_ledger ORDER BY created_at;
 - [x] Backend: identity middleware, job pipeline (create → generate → download) with
       mock generator producing real PDF/DOCX/PNG/JPEG
 - [x] Backend: vendor wallet/ledger/payouts + admin payout decisions
+- [x] Frontend wiring: customer job form + downloads, vendor wallet/ledger/payout UI
+      with generate-on-behalf-of-customer, admin payout queue (approve/pay/reject)
 - [x] Postman test flows documented above
 
 **Pending**
-- [ ] Frontend wiring of the pipeline (job form, job lists, download buttons, wallet UI,
-      admin payout screen)
 - [ ] Rust PDF service (replaces `services/generator.js` internals; same interface)
 - [ ] Customer payment gateway (Razorpay/Stripe) — `payment_status` column ready
-- [ ] Template management (admin UI for `templates.schema_definition`)
-- [ ] Admin dashboard stats (revenue, per-vendor earnings)
+- [ ] Schema-driven payload forms (generate inputs from `templates.schema_definition`)
+- [ ] Admin: pricing editor, vendor commission management, revenue stats
 - [ ] Auth hardening: refresh-token rotation, rate limiting on the backend

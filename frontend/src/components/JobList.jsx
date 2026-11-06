@@ -5,7 +5,7 @@ const STATUS_STYLES = {
   FAILED: 'bg-red-100 text-red-800',
 };
 
-export default function JobList({ jobs, onGenerate, onDownload, busyId }) {
+export default function JobList({ jobs, onGenerate, onDownload, busyId, showCut = false }) {
   if (!jobs.length) {
     return <p className="text-gray-500 text-sm mt-4">No documents yet — create your first one above.</p>;
   }
@@ -18,6 +18,7 @@ export default function JobList({ jobs, onGenerate, onDownload, busyId }) {
           <th className="p-2">Template</th>
           <th className="p-2">Format</th>
           <th className="p-2">Charged</th>
+          {showCut && <th className="p-2">Your cut</th>}
           <th className="p-2">Status</th>
           <th className="p-2">Actions</th>
         </tr>
@@ -29,6 +30,7 @@ export default function JobList({ jobs, onGenerate, onDownload, busyId }) {
             <td className="p-2">{job.template_id}</td>
             <td className="p-2">{job.requested_format}</td>
             <td className="p-2">₹{job.total_charged}</td>
+            {showCut && <td className="p-2 text-green-700">{job.vendor_id ? `₹${job.vendor_cut}` : '—'}</td>}
             <td className="p-2">
               <span className={`px-2 py-0.5 rounded text-xs font-medium ${STATUS_STYLES[job.status] ?? 'bg-gray-100'}`}>
                 {job.status}
